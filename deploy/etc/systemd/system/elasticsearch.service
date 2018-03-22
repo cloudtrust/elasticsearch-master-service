@@ -27,21 +27,6 @@ ExecStart=/usr/share/elasticsearch/bin/elasticsearch -p ${PID_DIR}/elasticsearch
 StandardOutput=journal
 StandardError=inherit
 
-# Specifies the maximum file descriptor number that can be opened by this process
-LimitNOFILE=65536
-
-# Specifies the maximum number of processes
-LimitNPROC=4096
-
-# Specifies the maximum size of virtual memory
-LimitAS=infinity
-
-# Specifies the maximum file size
-LimitFSIZE=infinity
-
-# Disable timeout logic and wait until process is stopped
-TimeoutStopSec=0
-
 # SIGTERM signal is used to stop the Java process
 KillSignal=SIGTERM
 
