@@ -29,6 +29,7 @@ RUN git checkout ${elasticsearch_service_git_tag} && \
     install -v -m 644 -D -o root -g root deploy/etc/nginx/conf.d/* /etc/nginx/conf.d/ && \
     install -v -m 644 -o root -g root deploy/etc/nginx/nginx.conf /etc/nginx/nginx.conf && \
     install -v -m 644 -o root -g root deploy/etc/nginx/mime.types /etc/nginx/mime.types && \
+    install -d -v -m 644 -o root -g root /etc/systemd/system/nginx.service.d/ && \
     install -v -o root -g root -m 644 deploy/etc/systemd/system/nginx.service.d/limit.conf /etc/systemd/system/nginx.service.d/limit.conf
 
 RUN systemctl enable elasticsearch && \
