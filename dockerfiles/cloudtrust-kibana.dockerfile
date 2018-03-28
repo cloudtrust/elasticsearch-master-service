@@ -25,7 +25,7 @@ RUN git checkout ${elasticsearch_service_git_tag} && \
     install -v -m 664 -o root -g root deploy/etc/systemd/system/elasticsearch.service /etc/systemd/system/elasticsearch.service && \
     install -v -m 664 -o root -g root deploy/etc/systemd/system/elasticsearch.service.d/* /etc/systemd/system/elasticsearch.service.d/ && \
     install -v -m 644 -o root -g root deploy/etc/security/limits.d/* /etc/security/limits.d/ && \
-    install -v -m 644 -o root -g root deploy/usr/lib/jvm/jre/lib/security/java.security /usr/lib/jvm/jre/lib/security/java.security
+    install -v -m 644 -o root -g root deploy/usr/lib/jvm/jre/lib/security/java.security /usr/lib/jvm/jre/lib/security/java.security && \
     install -v -m 644 -D -o root -g root deploy/etc/nginx/conf.d/* /etc/nginx/conf.d/ && \
     install -v -m 644 -o root -g root deploy/etc/nginx/nginx.conf /etc/nginx/nginx.conf && \
     install -v -m 644 -o root -g root deploy/etc/nginx/mime.types /etc/nginx/mime.types && \
