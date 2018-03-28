@@ -1,0 +1,5 @@
+check process redis-server matching "redis-server"
+  start program = "/usr/bin/systemctl start redis.service"
+  stop program = "/usr/bin/systemctl stop redis.service"
+  if failed host 127.0.0.1 port 6379 then restart
+  
