@@ -27,9 +27,6 @@ RUN git checkout ${elasticsearch_service_git_tag} && \
     install -v -m 664 -o root -g root deploy/etc/systemd/system/elasticsearch.service.d/* /etc/systemd/system/elasticsearch.service.d/ && \
     install -v -m 644 -o root -g root deploy/etc/security/limits.d/* /etc/security/limits.d/ && \
     install -v -m 644 -o root -g root deploy/usr/lib/jvm/jre/lib/security/java.security /usr/lib/jvm/jre/lib/security/java.security
-    install -v -m 644 -o root -g root deploy/etc/systemd/system/kibana.service /etc/systemd/system/kibana.service && \
-    install -v -m 644 -o root -g root deploy/etc/systemd/system/kibana.service.d/* /etc/systemd/system/kibana.service.d/ && \
-    install -v -m 644 
 
 
 RUN systemctl enable elasticsearch
