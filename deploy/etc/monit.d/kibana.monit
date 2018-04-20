@@ -1,5 +1,9 @@
-check process redis-server matching "redis-server"
-  start program = "/usr/bin/systemctl start redis.service"
-  stop program = "/usr/bin/systemctl stop redis.service"
-  if failed host 127.0.0.1 port 6379 then restart
-  
+check process kibana matching "kibana"
+  start program = "/usr/bin/systemctl start kibana.service" with timeout 60s
+  stop program = "/usr/bin/systemctl stop kibana.service"
+  if failed host 127.0.0.1 port 5601 protocol http then restart
+
+check process nginx matching "nginx"
+  start program = "/usr/bin/systemctl start nginx.service" with timeout 60s
+  stop program = "/usr/bin/systemctl stop nginx.service"
+  if failed host 127.0.0.1 port 80 protocol http then restart
