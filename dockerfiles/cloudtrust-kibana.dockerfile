@@ -12,7 +12,8 @@ enabled=1\n\
 autorefresh=1\n\
 type=rpm-md" > /etc/yum.repos.d/elasticsearch.repo
 
-RUN rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch && \
+RUN dnf update -y && \
+    rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch && \
     dnf install -y java-1.8.0-openjdk elasticsearch kibana nginx && \
     dnf clean all
 
