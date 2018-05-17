@@ -24,6 +24,7 @@ RUN git clone git@github.com:cloudtrust/elasticsearch-service.git
 
 WORKDIR /cloudtrust/elasticsearch-service
 RUN git checkout ${elasticsearch_service_git_tag} && \
+    install -v -m 644 -o root -g root deploy/etc/monit.d/elasticsearch.monit /etc/monit.d/ && \
     install -d -v -m 775 -o root -g root /etc/systemd/system/elasticsearch.service.d && \
     install -v -m 664 -o root -g root deploy/etc/systemd/system/elasticsearch.service /etc/systemd/system/elasticsearch.service && \
     install -v -m 664 -o root -g root deploy/etc/systemd/system/elasticsearch.service.d/* /etc/systemd/system/elasticsearch.service.d/ && \
@@ -31,4 +32,5 @@ RUN git checkout ${elasticsearch_service_git_tag} && \
     install -v -m 644 -o root -g root deploy/usr/lib/jvm/jre/lib/security/java.security /usr/lib/jvm/jre/lib/security/java.security
 
 
-RUN systemctl enable elasticsearch
+RUN systemctl enable elasticsearch.service && \
+    systemctl enable monit.service
