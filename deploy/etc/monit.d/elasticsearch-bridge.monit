@@ -1,0 +1,4 @@
+check process agent matching "elasticsearch_bridge"
+  start program = "/usr/bin/systemctl start elasticsearch-bridge.service"
+  stop program = "/usr/bin/systemctl stop elasticsearch-bridge.service"
+  if not exist then restart

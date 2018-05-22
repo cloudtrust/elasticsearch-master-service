@@ -1,7 +1,7 @@
 FROM cloudtrust-baseimage:f27
 
 ARG elasticsearch_service_git_tag
-ARG elasticsearch_service_release
+ARG elasticsearch_bridge_release
 ARG jaeger_release
 ARG config_git_tag
 ARG config_repo
@@ -52,7 +52,7 @@ RUN install -v -m 644 -o root -g root deploy/etc/monit.d/elasticsearch.monit /et
 ##
 
 WORKDIR /cloudtrust
-RUN wget ${elasticsearch_service_release} -O elasticsearch-bridge.tar.gz && \
+RUN wget ${elasticsearch_bridge_release} -O elasticsearch-bridge.tar.gz && \
     mkdir "elasticsearch-bridge" && \
     tar -xzf "elasticsearch-bridge.tar.gz" -C "elasticsearch-bridge" --strip-components 1 && \
     rm -f elasticsearch-bridge.tar.gz
@@ -62,7 +62,8 @@ RUN install -d -v -o elasticsearch -g elasticsearch /opt/elasticsearch-bridge &&
     install -v -o elasticsearch -g elasticsearch elasticsearch_bridge /opt/elasticsearch-bridge
 
 WORKDIR /cloudtrust/elasticsearch-service 
-RUN install -v -o root -g root deploy/etc/systemd/system/elasticsearch-bridge.service /etc/systemd/system/
+RUN install -v -o root -g root deploy/etc/systemd/system/elasticsearch-bridge.service /etc/systemd/system/ && \
+    install -v -m 644 -o root -g root deploy/etc/monit.d/elasticsearch-bridge.monit /etc/monit.d/
 
 ##
 ##  JAEGER AGENT
@@ -79,6 +80,7 @@ RUN wget ${jaeger_release} -O jaeger.tar.gz && \
 WORKDIR /cloudtrust/elasticsearch-service
 RUN install -v -o agent -g agent -m 644 deploy/etc/systemd/system/agent.service /etc/systemd/system/agent.service && \
     install -d -v -o root -g root -m 644 /etc/systemd/system/agent.service.d && \
+    install -v -m 644 -o root -g root deploy/etc/monit.d/agent.monit /etc/monit.d/ && \
     install -v -o root -g root -m 644 deploy/etc/systemd/system/agent.service.d/limit.conf /etc/systemd/system/agent.service.d/limit.conf
 
 ##
