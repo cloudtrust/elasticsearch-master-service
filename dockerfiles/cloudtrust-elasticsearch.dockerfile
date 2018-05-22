@@ -25,9 +25,7 @@ RUN dnf update -y && \
     dnf install -y java-1.8.0-openjdk elasticsearch && \
     dnf clean all
 
-RUN groupadd elasticsearch && \
-    useradd -m -s /sbin/nologin -g elasticsearch elasticsearch && \
-    install -d -v -m755 /opt/elasticsearch -o root -g root && \
+RUN install -d -v -m755 /opt/elasticsearch -o root -g root && \
     install -d -v -m755 /etc/elasticsearch -o elasticsearch -g elasticsearch && \
     groupadd agent && \
     useradd -m -s /sbin/nologin -g agent agent && \
@@ -56,12 +54,12 @@ RUN install -v -m 644 -o root -g root deploy/etc/monit.d/elasticsearch.monit /et
 WORKDIR /cloudtrust
 RUN wget ${elasticsearch_service_release} -O elasticsearch-bridge.tar.gz && \
     mkdir "elasticsearch-bridge" && \
-    tar -xvf "elastcisearch-bridge.tar.gz" -C "elastcisearch-bridge" --strip-components 1 && \
-    rm -f elastcisearch-bridge.tar.gz
+    tar -xvf "elasticsearch-bridge.tar.gz" -C "elasticsearch-bridge" --strip-components 1 && \
+    rm -f elasticsearch-bridge.tar.gz
 
-WORKDIR /cloudtrust/elastcisearch-bridge
-RUN install -d -v -o elasticsearch -g elasticsearch /opt/elastcisearch-bridge && \ 
-    install -v -o elasticsearch -g elasticsearch elastcisearch-bridge /opt/elastcisearch-bridge
+WORKDIR /cloudtrust/elasticsearch-bridge
+RUN install -d -v -o elasticsearch -g elasticsearch /opt/elasticsearch-bridge && \ 
+    install -v -o elasticsearch -g elasticsearch elasticsearch-bridge /opt/elasticsearch-bridge
 
 ##
 ##  JAEGER AGENT
