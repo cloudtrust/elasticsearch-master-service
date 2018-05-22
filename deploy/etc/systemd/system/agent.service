@@ -1,0 +1,13 @@
+[Unit]
+Description=Jaeger tracing agent
+After=network.target
+
+[Service]
+Type=simple
+User=agent
+Group=agent
+Environment=SPAN_STORAGE_TYPE="elasticsearch"
+ExecStart=/opt/agent/agent --config-file /etc/agent/agent.yml
+
+[Install]
+WantedBy=multi-user.target
