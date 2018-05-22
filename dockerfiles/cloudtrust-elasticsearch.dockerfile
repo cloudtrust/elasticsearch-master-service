@@ -54,12 +54,15 @@ RUN install -v -m 644 -o root -g root deploy/etc/monit.d/elasticsearch.monit /et
 WORKDIR /cloudtrust
 RUN wget ${elasticsearch_service_release} -O elasticsearch-bridge.tar.gz && \
     mkdir "elasticsearch-bridge" && \
-    tar -xvf "elasticsearch-bridge.tar.gz" -C "elasticsearch-bridge" --strip-components 1 && \
+    tar -xzf "elasticsearch-bridge.tar.gz" -C "elasticsearch-bridge" --strip-components 1 && \
     rm -f elasticsearch-bridge.tar.gz
 
 WORKDIR /cloudtrust/elasticsearch-bridge
 RUN install -d -v -o elasticsearch -g elasticsearch /opt/elasticsearch-bridge && \ 
-    install -v -o elasticsearch -g elasticsearch elasticsearch-bridge /opt/elasticsearch-bridge
+    install -v -o elasticsearch -g elasticsearch elasticsearch_bridge /opt/elasticsearch-bridge
+
+WORKDIR /cloudtrust/elasticsearch-service 
+RUN install -v -o root -g root deploy/etc/systemd/system/elasticsearch-bridge.service /etc/systemd/system/
 
 ##
 ##  JAEGER AGENT
@@ -87,9 +90,8 @@ RUN git checkout ${config_git_tag}
 
 WORKDIR /cloudtrust/config
 RUN install -v -m0755 -o agent -g agent deploy/etc/jaeger-agent/agent.yml /etc/agent/ && \
-    install -v -m0755 -o flaki -g flaki deploy/etc/elasticsearch-bridge/elasticsearch_bridge.yml /etc/elasticsearch-bridge/ 
-
-
+    install -v -o elasticsearch -g elasticsearch -d -m755 /etc/elasticsearch-bridge && \
+    install -v -m0755 -o elasticsearch -g elasticsearch deploy/etc/elasticsearch-bridge/elasticsearch_bridge.yml /etc/elasticsearch-bridge/ 
 
 RUN systemctl enable elasticsearch.service && \
     systemctl enable agent.service && \
