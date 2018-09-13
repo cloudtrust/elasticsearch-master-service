@@ -6,6 +6,9 @@ ARG jaeger_release
 ARG config_git_tag
 ARG config_repo
 
+ARG java8_version=1:1.8.0.181-7.b13.fc27
+ARG elasticsearch_version=1.7.1-3.fc24
+
 ##
 ## Installing elasticsearch
 ##
@@ -22,7 +25,7 @@ type=rpm-md" > /etc/yum.repos.d/elasticsearch.repo
 
 RUN dnf update -y && \
     rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch && \
-    dnf install -y java-1.8.0-openjdk elasticsearch && \
+    dnf install -y java-1.8.0-openjdk-$java8_version elasticsearch-$elasticsearch_version && \
     dnf clean all
 
 RUN install -d -v -m755 /opt/elasticsearch -o root -g root && \

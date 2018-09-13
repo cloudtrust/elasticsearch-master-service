@@ -2,6 +2,11 @@ FROM cloudtrust-baseimage:f27
 
 ARG elasticsearch_service_git_tag
 
+ARG java8_version=1:1.8.0.181-7.b13.fc27
+ARG elasticsearch_version=1.7.1-3.fc24
+ARG kibana_version=6.4.0-1
+ARG nginx_version=1.12.1-1.fc27
+
 RUN echo -e "\
 [elasticsearch-6.x]\n\
 name=Elasticsearch repository for 6.x packages\n\
@@ -14,7 +19,7 @@ type=rpm-md" > /etc/yum.repos.d/elasticsearch.repo
 
 RUN dnf update -y && \
     rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch && \
-    dnf install -y java-1.8.0-openjdk elasticsearch kibana nginx && \
+    dnf install -y java-1.8.0-openjdk-$java8_version elasticsearch-$elasticsearch_version kibana-$kibana_version nginx-$nginx_version && \
     dnf clean all
 
 WORKDIR /cloudtrust
