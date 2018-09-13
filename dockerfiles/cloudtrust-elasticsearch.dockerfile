@@ -1,8 +1,8 @@
 FROM cloudtrust-baseimage:f27
 
 ARG elasticsearch_service_git_tag
-ARG elasticsearch_bridge_release
-ARG jaeger_release
+ARG elasticsearch_bridge_release=1.0
+ARG jaeger_release=1.2.0
 ARG config_git_tag
 ARG config_repo
 
