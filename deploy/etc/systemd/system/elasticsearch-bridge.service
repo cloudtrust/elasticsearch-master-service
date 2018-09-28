@@ -1,0 +1,12 @@
+[Unit]
+Description=Elasticsearch Bridge
+After=network.target
+
+[Service]
+Type=simple
+User=elasticsearch
+Group=elasticsearch
+ExecStart=/opt/elasticsearch-bridge/elasticsearch_bridge --config-file /etc/elasticsearch-bridge/elasticsearch_bridge.yml
+
+[Install]
+WantedBy=multi-user.target
